@@ -5,7 +5,7 @@ import requests
 
 def top_ten(subreddit):
     """Print the first 10 hot-post titles, or None for an invalid subreddit."""
-    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {"User-Agent": "ALU-top-ten-script/1.0"}
 
     response = requests.get(
@@ -18,7 +18,7 @@ def top_ten(subreddit):
         print(None)
         return
 
-    posts = response.json().get("data", {}).get("children", [])
+    posts = response.json()["data"]["children"][:10]
 
     for post in posts:
-        print(post.get("data", {}).get("title"))
+        print(post["data"]["title"])
